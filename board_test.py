@@ -22,6 +22,9 @@ def test_init(b1):
             assert b1.space[space].color == 'w', "{} should be b".format(space)
         i += 1
 
+        # if(b1.space[space].occupied):
+        #     print(b1.space[space].piece.type)
+
 if __name__ == "__main__":
     b1 = board.Board()
     test_init(b1)

@@ -16,7 +16,7 @@ def test_pretty_print():
     game = Game()
     actual = game.pretty_print_position()
 
-    assert actual == expected, "Pretty print not working: actual" + actual
+    assert actual == expected, "Pretty print not working: actual\n" + actual + "\n\nexpected\n" + expected
 
 
 

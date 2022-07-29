@@ -1,8 +1,21 @@
 class Game:
-    starting_position = ""
-    def __init__(self, starting_postion="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"):
-        self.starting_position = starting_postion
+    position = ""
+    def __init__(self, postion="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"):
+        self.position = postion
 
+
+    def pretty_print_rank(self, rank):
+        left = "|_"
+        right = "_"
+        rank_str = ""
+        for square in rank:
+            if square.isnumeric():
+                for space in range(int(square)):
+                    rank_str = rank_str + "{}_{}".format(left, right)
+            else:
+                rank_str = rank_str + "{}{}{}".format(left, square, right)
+        rank_str += "|"
+        return rank_str
     """
     _________________________________
     |_r_|_n_|_b_|_q_|_k_|_b_|_n_|_r_|
@@ -17,7 +30,7 @@ class Game:
     def pretty_print_position(self):
         top = "_________________________________"
 
-        ranks = self.starting_position.split("/")
+        ranks = self.position.split("/")
         eigth = ranks[0]
         seventh = ranks[1]
         sixth = ranks[2]
@@ -25,8 +38,16 @@ class Game:
         fourth = ranks[4]
         third = ranks[5]
         second = ranks[6]
-        first = ranks[7]
-            
-        print("ranks:", ranks)
-        return "_________________________________\n|_r_|_n_|_b_|_q_|_k_|_b_|_n_|_r_|\n|_p_|_p_|_p_|_p_|_p_|_p_|_p_|_p_|\n|___|___|___|___|___|___|___|___|\n|___|___|___|___|___|___|___|___|\n|___|___|___|___|___|___|___|___|\n|___|___|___|___|___|___|___|___|\n|_P_|_P_|_P_|_P_|_P_|_P_|_P_|_P_|\n|_R_|_N_|_B_|_Q_|_K_|_B_|_N_|_R_|"
+        first = ranks[7].split(" ")[0]
         
+        eigth_str = self.pretty_print_rank(eigth)
+        seventh_str = self.pretty_print_rank(seventh)
+        sixth_str = self.pretty_print_rank(sixth)
+        fifth_str = self.pretty_print_rank(fifth)
+        fourth_str = self.pretty_print_rank(fourth)
+        third_str = self.pretty_print_rank(third)
+        second_str = self.pretty_print_rank(second)
+        first_str = self.pretty_print_rank(first)
+
+        board_str = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(top, eigth_str, seventh_str, sixth_str, fifth_str, fourth_str, third_str, second_str, first_str)
+        return board_str

@@ -1,8 +1,15 @@
+import Move
+
 class Game:
     position = ""
-    def __init__(self, postion="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"):
-        self.position = postion
+    def __init__(self, position="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"):
+        self.position = position
 
+    def move(self, new_position):
+        if Move.move_is_legal(self.position, new_position):
+            self.position = new_position
+        else:
+            raise Move.IllegalMoveException()
 
     def pretty_print_rank(self, rank):
         left = "|_"

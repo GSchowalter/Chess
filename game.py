@@ -1,13 +1,43 @@
 import Move
+import FEN_utils
 
 class Game:
     position = ""
+    board = [["-" for i in range(8)] for j in range(8)] 
     def __init__(self, position="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"):
         self.position = position
+        self.initialize_board(position)
 
-    def move(self, new_position):
-        if Move.move_is_legal(self.position, new_position):
-            self.position = new_position
+    def split(self, word):
+        return [char for char in word]
+
+    def parse_fen_rank(self, rank):
+        new_rank = []
+        for space in rank:
+            if space.isnumeric():
+                for empty_space in range(int(space)):
+                    new_rank = new_rank + ["-"]
+            else:
+                new_rank = new_rank + [space]
+        return new_rank
+
+
+    def initialize_board(self, position):
+        fen = FEN_utils.parse_FEN(position)
+        raw_ranks = fen[0:8]
+        ranks = []
+        for rank in raw_ranks:
+            rank_list = self.split(rank)
+            ranks.append(rank_list)
+        
+        # convert numbers to empty spaces
+        for count, rank in enumerate(ranks):
+            new_rank = self.parse_fen_rank(rank)
+            self.board[count] = new_rank
+
+    def move(self, move):
+        if Move.move_is_legal(self.position, move):
+            self.position = Move.transform_position(self.position, move)
         else:
             raise Move.IllegalMoveException()
 
